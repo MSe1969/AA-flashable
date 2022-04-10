@@ -3,7 +3,7 @@ ifelse(is_mounted("/system"), unmount("/system"));
 ifelse(is_mounted("/system_root"), unmount("/system_root"));
 package_extract_file("mount-system.sh", "/tmp/mount-system.sh");
 package_extract_file("unmount-system.sh", "/tmp/unmount-system.sh");
-package_extract_file("sys-sys.sh", "/tmp/sys-root.sh");
+package_extract_file("sys-root.sh", "/tmp/sys-root.sh");
 package_extract_file("sys-sys.sh", "/tmp/sys-sys.sh");
 set_metadata("/tmp/mount-system.sh", "uid", 0, "gid", 0, "mode", 0755);
 set_metadata("/tmp/unmount-system.sh", "uid", 0, "gid", 0, "mode", 0755);

@@ -5,7 +5,7 @@
 # even if property not present
 system_as_root=`getprop ro.build.system_root_image`
 if [ "$system_as_root" == "true" ] || [ -d "/system_root" ]; then
-  if mount /system_root; then
+  if mount -o rw /system_root; then
     exit 0
   fi
 
