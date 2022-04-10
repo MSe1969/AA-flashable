@@ -1,14 +1,17 @@
 ui_print("Installing AA addon...");
 ifelse(is_mounted("/system"), unmount("/system"));
+ifelse(is_mounted("/system_root"), unmount("/system_root"));
 package_extract_file("mount-system.sh", "/tmp/mount-system.sh");
 package_extract_file("unmount-system.sh", "/tmp/unmount-system.sh");
 package_extract_file("sys-sys.sh", "/tmp/sys-sys.sh");
+package_extract_file("sys-root.sh", "/tmp/sys-root.sh");
 set_metadata("/tmp/mount-system.sh", "uid", 0, "gid", 0, "mode", 0755);
 set_metadata("/tmp/unmount-system.sh", "uid", 0, "gid", 0, "mode", 0755);
 set_metadata("/tmp/sys-sys.sh", "uid", 0, "gid", 0, "mode", 0755);
+set_metadata("/tmp/sys-root.sh", "uid", 0, "gid", 0, "mode", 0755);
 run_program("/tmp/mount-system.sh") == 0 || abort("Could not mount /system");
 
-if getprop("ro.build.system_root_image") != "true" then
+if run_program("/tmp/sys-root.sh") != 0 then
   if run_program("/tmp/sys-sys.sh") == 0 then
     package_extract_dir("system", "/system/system");
     set_metadata("/system/system/addon.d/77-aastub.sh", "uid", 0, "gid", 0, "mode", 0644, "selabel", "u:object_r:system_file:s0");
